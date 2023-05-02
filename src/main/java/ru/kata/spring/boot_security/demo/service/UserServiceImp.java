@@ -14,6 +14,7 @@ import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -58,8 +59,15 @@ public class UserServiceImp implements UserService, UserDetailsService {
 
     @Override
     @Transactional
-    public void update(User user) {
-        userRepository.save(user);
+    public void update(Long id, String name, String surname,
+                       int age, String password, Set<Role> roles) {
+        User newUser = userRepository.getUserById(id);
+        newUser.setName(name);
+        newUser.setLastName(surname);
+        newUser.setAge(age);
+        newUser.setRoles(roles);
+        newUser.setPassword(password);
+        userRepository.save(newUser);
     }
 
     @Override

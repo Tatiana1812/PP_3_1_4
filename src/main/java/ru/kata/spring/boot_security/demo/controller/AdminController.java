@@ -71,15 +71,8 @@ public class AdminController {
 
     @PostMapping(value = "/edit")
     public String editUser(@RequestParam Long id, @RequestParam String name, @RequestParam String surname,
-                           @RequestParam int age, @RequestParam String password, @RequestParam List<Long> roles, ModelMap model) {
-        User newUser = userService.getUserById(id);
-        newUser.setName(name);
-        newUser.setLastName(surname);
-        newUser.setAge(age);
-        newUser.setPassword(password);
-        newUser.setRoles(roleService.getRolesById(roles));
-        model.put("users", newUser);
-        userService.update(newUser);
+                           @RequestParam int age, @RequestParam String password, @RequestParam List<Long> roles) {
+        userService.update(id, name, surname, age, password, roleService.getRolesById(roles));
         return "redirect:/admin";
     }
 }
